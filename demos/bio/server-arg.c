@@ -79,19 +79,16 @@ int main(int argc, char *argv[])
     /*
      * Demo of how to iterate over all certificates in an SSL_CTX structure.
      */
-    {
-        X509 *x;
-        int rv;
-        rv = SSL_CTX_set_current_cert(ctx, SSL_CERT_SET_FIRST);
-        while (rv) {
-            X509 *x = SSL_CTX_get0_certificate(ctx);
-            X509_NAME_print_ex_fp(stdout, X509_get_subject_name(x), 0,
-                                  XN_FLAG_ONELINE);
-            printf("\n");
-            rv = SSL_CTX_set_current_cert(ctx, SSL_CERT_SET_NEXT);
-        }
-        fflush(stdout);
+    int rv;
+    rv = SSL_CTX_set_current_cert(ctx, SSL_CERT_SET_FIRST);
+    while (rv) {
+        X509 *x = SSL_CTX_get0_certificate(ctx);
+        X509_NAME_print_ex_fp(stdout, X509_get_subject_name(x), 0,
+                                XN_FLAG_ONELINE);
+        printf("\n");
+        rv = SSL_CTX_set_current_cert(ctx, SSL_CERT_SET_NEXT);
     }
+    fflush(stdout);
 #endif
     /* Setup server side SSL bio */
     ssl_bio = BIO_new_ssl(ctx, 0);

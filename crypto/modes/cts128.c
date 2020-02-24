@@ -125,10 +125,6 @@ size_t CRYPTO_nistcts128_encrypt(const unsigned char *in, unsigned char *out,
                                  unsigned char ivec[16], cbc128_f cbc)
 {
     size_t residue;
-    union {
-        size_t align;
-        unsigned char c[16];
-    } tmp;
 
     if (len < 16)
         return 0;
@@ -148,6 +144,10 @@ size_t CRYPTO_nistcts128_encrypt(const unsigned char *in, unsigned char *out,
 #if defined(CBC_HANDLES_TRUNCATED_IO)
     (*cbc) (in, out - 16 + residue, residue, key, ivec, 1);
 #else
+    union {
+        size_t align;
+        unsigned char c[16];
+    } tmp;
     memset(tmp.c, 0, sizeof(tmp));
     memcpy(tmp.c, in, residue);
     (*cbc) (tmp.c, out - 16 + residue, 16, key, ivec, 1);

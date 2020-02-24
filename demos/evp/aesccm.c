@@ -50,7 +50,7 @@ static const unsigned char ccm_tag[] = {
 void aes_ccm_encrypt(void)
 {
     EVP_CIPHER_CTX *ctx;
-    int outlen, tmplen;
+    int outlen;
     unsigned char outbuf[1024];
     printf("AES CCM Encrypt:\n");
     printf("Plaintext:\n");
@@ -87,7 +87,7 @@ void aes_ccm_encrypt(void)
 void aes_ccm_decrypt(void)
 {
     EVP_CIPHER_CTX *ctx;
-    int outlen, tmplen, rv;
+    int outlen, rv;
     unsigned char outbuf[1024];
     printf("AES CCM Derypt:\n");
     printf("Ciphertext:\n");
