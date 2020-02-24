@@ -563,7 +563,7 @@ int tls_construct_finished(SSL *s, WPACKET *pkt)
             && !s->server
             && s->s3.tmp.cert_req == 0
             && (!s->method->ssl3_enc->change_cipher_state(s,
-                    SSL3_CC_HANDSHAKE | SSL3_CHANGE_CIPHER_CLIENT_WRITE))) {;
+                    SSL3_CC_HANDSHAKE | SSL3_CHANGE_CIPHER_CLIENT_WRITE))) {
         /* SSLfatal() already called */
         return 0;
     }

@@ -1373,7 +1373,7 @@ int ssl3_read_bytes(SSL *s, int type, int *recvd_type, unsigned char *buf,
         /* Skip over any records we have already read */
         for (curr_rec = 0;
              curr_rec < num_recs && SSL3_RECORD_is_read(&rr[curr_rec]);
-             curr_rec++) ;
+             ++curr_rec) {}
         if (curr_rec == num_recs) {
             RECORD_LAYER_set_numrpipes(&s->rlayer, 0);
             num_recs = 0;

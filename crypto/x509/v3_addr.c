@@ -143,7 +143,7 @@ static int i2r_address(BIO *out,
         if (!addr_expand(addr, bs, 16, fill))
             return 0;
         for (n = 16; n > 1 && addr[n - 1] == 0x00 && addr[n - 2] == 0x00;
-             n -= 2) ;
+             n -= 2) {}
         for (i = 0; i < n; i += 2)
             BIO_printf(out, "%x%s", (addr[i] << 8) | addr[i + 1],
                        (i < 14 ? ":" : ""));
@@ -344,8 +344,8 @@ static int range_should_be_prefix(const unsigned char *min,
 
     if (memcmp(min, max, length) <= 0)
         return -1;
-    for (i = 0; i < length && min[i] == max[i]; i++) ;
-    for (j = length - 1; j >= 0 && min[j] == 0x00 && max[j] == 0xFF; j--) ;
+    for (i = 0; i < length && min[i] == max[i]; ++i) {}
+    for (j = length - 1; j >= 0 && min[j] == 0x00 && max[j] == 0xFF; --j) {}
     if (i < j)
         return -1;
     if (i > j)
@@ -441,7 +441,7 @@ static int make_addressRange(IPAddressOrRange **result,
         (aor->u.addressRange->max = ASN1_BIT_STRING_new()) == NULL)
         goto err;
 
-    for (i = length; i > 0 && min[i - 1] == 0x00; --i) ;
+    for (i = length; i > 0 && min[i - 1] == 0x00; --i) {}
     if (!ASN1_BIT_STRING_set(aor->u.addressRange->min, min, i))
         goto err;
     aor->u.addressRange->min->flags &= ~7;
@@ -454,7 +454,7 @@ static int make_addressRange(IPAddressOrRange **result,
         aor->u.addressRange->min->flags |= 8 - j;
     }
 
-    for (i = length; i > 0 && max[i - 1] == 0xFF; --i) ;
+    for (i = length; i > 0 && max[i - 1] == 0xFF; --i) {}
     if (!ASN1_BIT_STRING_set(aor->u.addressRange->max, max, i))
         goto err;
     aor->u.addressRange->max->flags &= ~7;
@@ -750,7 +750,7 @@ int X509v3_addr_is_canonical(IPAddrBlocks *addr)
              * Punt if adjacent or overlapping.  Check for adjacency by
              * subtracting one from b_min first.
              */
-            for (k = length - 1; k >= 0 && b_min[k]-- == 0x00; k--) ;
+            for (k = length - 1; k >= 0 && b_min[k]-- == 0x00; --k) {}
             if (memcmp(a_max, b_min, length) >= 0)
                 return 0;
 
@@ -828,7 +828,7 @@ static int IPAddressOrRanges_canonize(IPAddressOrRanges *aors,
          * Merge if a and b are adjacent.  We check for
          * adjacency by subtracting one from b_min first.
          */
-        for (j = length - 1; j >= 0 && b_min[j]-- == 0x00; j--) ;
+        for (j = length - 1; j >= 0 && b_min[j]-- == 0x00; --j) {}
         if (memcmp(a_max, b_min, length) == 0) {
             IPAddressOrRange *merged;
             if (!make_addressRange(&merged, a_min, b_max, length))

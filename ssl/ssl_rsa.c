@@ -154,7 +154,7 @@ static int ssl_set_pkey(CERT *c, EVP_PKEY *pkey)
          * cards.
          */
         if (EVP_PKEY_id(pkey) == EVP_PKEY_RSA
-            && RSA_flags(EVP_PKEY_get0_RSA(pkey)) & RSA_METHOD_FLAG_NO_CHECK) ;
+            && RSA_flags(EVP_PKEY_get0_RSA(pkey)) & RSA_METHOD_FLAG_NO_CHECK) {}  // TODO remove?
         else
 #endif
         if (!X509_check_private_key(c->pkeys[i].x509, pkey)) {
@@ -349,7 +349,7 @@ static int ssl_set_cert(CERT *c, X509 *x)
          */
         if (EVP_PKEY_id(c->pkeys[i].privatekey) == EVP_PKEY_RSA
             && RSA_flags(EVP_PKEY_get0_RSA(c->pkeys[i].privatekey)) &
-            RSA_METHOD_FLAG_NO_CHECK) ;
+            RSA_METHOD_FLAG_NO_CHECK) {} // TODO remove?
         else
 #endif                          /* OPENSSL_NO_RSA */
         if (!X509_check_private_key(x, c->pkeys[i].privatekey)) {

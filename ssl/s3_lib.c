@@ -4231,7 +4231,7 @@ const SSL_CIPHER *ssl3_choose_cipher(SSL *s, STACK_OF(SSL_CIPHER) *clnt,
          * that.
          */
         if (s->psk_server_callback != NULL) {
-            for (j = 0; j < SSL_PKEY_NUM && !ssl_has_cert(s, j); j++);
+            for (j = 0; j < SSL_PKEY_NUM && !ssl_has_cert(s, j); ++j) {}
             if (j == SSL_PKEY_NUM) {
                 /* There are no certificates */
                 prefer_sha256 = 1;

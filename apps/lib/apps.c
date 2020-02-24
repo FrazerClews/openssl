@@ -1162,8 +1162,8 @@ static int index_serial_cmp(const OPENSSL_CSTRING *a,
 {
     const char *aa, *bb;
 
-    for (aa = a[DB_serial]; *aa == '0'; aa++) ;
-    for (bb = b[DB_serial]; *bb == '0'; bb++) ;
+    for (aa = a[DB_serial]; *aa == '0'; ++aa) {}
+    for (bb = b[DB_serial]; *bb == '0'; --bb) {}
     return strcmp(aa, bb);
 }
 
