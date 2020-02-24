@@ -304,7 +304,6 @@ int BIO_socket_nbio(int s, int mode)
     int ret = -1;
     int l;
 
-    l = mode;
 # ifdef FIONBIO
     l = mode;
 

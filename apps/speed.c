@@ -4003,7 +4003,6 @@ static void multiblock_speed(const EVP_CIPHER *evp_cipher, int lengths_single,
     const char *alg_name;
     unsigned char *inp, *out, *key, no_key[32], no_iv[16];
     EVP_CIPHER_CTX *ctx;
-    double d = 0.0;
 
     if (lengths_single) {
         mblengths = &lengths_single;
@@ -4065,7 +4064,7 @@ static void multiblock_speed(const EVP_CIPHER *evp_cipher, int lengths_single,
                 EVP_Cipher(ctx, out, inp, len + pad);
             }
         }
-        d = Time_F(STOP);
+        double d = Time_F(STOP);
         BIO_printf(bio_err, mr ? "+R:%d:%s:%f\n"
                    : "%d %s's in %.2fs\n", count, "evp", d);
         results[D_EVP][j] = ((double)count) / d * mblengths[j];

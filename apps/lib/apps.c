@@ -2689,7 +2689,7 @@ OSSL_PARAM *app_params_new_from_opts(STACK_OF(OPENSSL_STRING) *opts,
     OSSL_PARAM *params = NULL;
     size_t sz = (size_t)sk_OPENSSL_STRING_num(opts);
     size_t params_n;
-    char *opt = "", *stmp, *vtmp = NULL;
+    char *opt, *stmp, *vtmp = NULL;
     int found = 1;
 
     if (opts == NULL)

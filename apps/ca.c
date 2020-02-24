@@ -1035,9 +1035,11 @@ end_of_options:
                 goto end;
         }
 
-        outdirlen = OPENSSL_strlcpy(new_cert, outdir, sizeof(new_cert));
 #ifndef OPENSSL_SYS_VMS
+        OPENSSL_strlcpy(new_cert, outdir, sizeof(new_cert));
         outdirlen = OPENSSL_strlcat(new_cert, "/", sizeof(new_cert));
+#else
+        outdirlen = OPENSSL_strlcpy(new_cert, outdir, sizeof(new_cert));
 #endif
 
         if (verbose)
@@ -2299,7 +2301,7 @@ static int do_updatedb(CA_DB *db)
     ASN1_UTCTIME *a_tm = NULL;
     int i, cnt = 0;
     int db_y2k, a_y2k;          /* flags = 1 if y >= 2000 */
-    char **rrow, *a_tm_s;
+    char *a_tm_s;
 
     a_tm = ASN1_UTCTIME_new();
     if (a_tm == NULL)
@@ -2321,7 +2323,7 @@ static int do_updatedb(CA_DB *db)
         a_y2k = 0;
 
     for (i = 0; i < sk_OPENSSL_PSTRING_num(db->db->data); i++) {
-        rrow = sk_OPENSSL_PSTRING_value(db->db->data, i);
+        char **rrow = sk_OPENSSL_PSTRING_value(db->db->data, i);
 
         if (rrow[DB_type][0] == DB_TYPE_VAL) {
             /* ignore entries that are not valid */

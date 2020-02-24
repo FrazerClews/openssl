@@ -97,7 +97,7 @@ const char *LP_find_file(LP_DIR_CTX **ctx, const char *directory)
         if (sizeof(TCHAR) != sizeof(char)) {
             TCHAR *wdir = NULL;
             /* len_0 denotes string length *with* trailing 0 */
-            size_t index = 0, len_0 = dirlen + 1;
+            size_t len_0 = dirlen + 1;
 #ifdef LP_MULTIBYTE_AVAILABLE
             int sz = 0;
             UINT cp;
@@ -137,7 +137,7 @@ const char *LP_find_file(LP_DIR_CTX **ctx, const char *directory)
                  * concatenate asterisk, |sz| covers trailing '\0'!
                  */
                 wdir = _alloca((sz + 2) * sizeof(TCHAR));
-                for (index = 0; index < len_0; index++)
+                for (size_t index = 0; index < len_0; index++)
                     wdir[index] = (TCHAR)directory[index];
             }
 
