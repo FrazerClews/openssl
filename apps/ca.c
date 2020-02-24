@@ -290,6 +290,7 @@ int ca_main(int argc, char **argv)
 
     prog = opt_init(argc, argv, ca_options);
     while ((o = opt_next()) != OPT_EOF) {
+        char *endptr;
         switch (o) {
         case OPT_EOF:
         case OPT_ERR:
@@ -339,7 +340,7 @@ opthelp:
             enddate = opt_arg();
             break;
         case OPT_DAYS:
-            days = atoi(opt_arg());
+            days = strtol(opt_arg(), &endptr, 10);
             break;
         case OPT_MD:
             md = opt_arg();
@@ -398,13 +399,13 @@ opthelp:
             msie_hack = 1;
             break;
         case OPT_CRLDAYS:
-            crldays = atol(opt_arg());
+            crldays = strtol(opt_arg(), &endptr, 10);
             break;
         case OPT_CRLHOURS:
-            crlhours = atol(opt_arg());
+            crlhours = strtol(opt_arg(), &endptr, 10);
             break;
         case OPT_CRLSEC:
-            crlsec = atol(opt_arg());
+            crlsec = strtol(opt_arg(), &endptr, 10);
             break;
         case OPT_INFILES:
             req = 1;
