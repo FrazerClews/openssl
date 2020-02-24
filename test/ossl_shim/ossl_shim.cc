@@ -150,13 +150,13 @@ static bool GetCertificate(SSL *ssl, bssl::UniquePtr<X509> *out_x509,
   const TestConfig *config = GetTestConfig(ssl);
 
   if (!config->key_file.empty()) {
-    *out_pkey = LoadPrivateKey(config->key_file.c_str());
+    *out_pkey = LoadPrivateKey(config->key_file);
     if (!*out_pkey) {
       return false;
     }
   }
   if (!config->cert_file.empty()) {
-    *out_x509 = LoadCertificate(config->cert_file.c_str());
+    *out_x509 = LoadCertificate(config->cert_file);
     if (!*out_x509) {
       return false;
     }
